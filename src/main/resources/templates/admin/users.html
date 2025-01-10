@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 30px 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+
+        /* Container Styling */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-top: 30px;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            font-size: 28px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            font-size: 14px;
+        }
+
+        td {
+            background-color: #ffffff;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover td {
+            background-color: #dfe6e9;
+            cursor: pointer;
+        }
+
+        /* Button Styling */
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+        /* Input Fields Styling */
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Form Styling */
+        form {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        /* Logout Link Styling */
+        a.logout-link {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a.logout-link:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1, h2 {
+                font-size: 24px;
+            }
+
+            button {
+                font-size: 12px;
+                padding: 10px 14px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            td, th {
+                padding: 10px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<div>
+<h1>User List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Borrowed</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.bookId}"></td>
+        <td>
+            <form th:action="@{/admin/users/delete/{id}(id=${user.id})}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h1>Book List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Book ID</th>
+        <th>Book Name</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.book_id}"></td>
+        <td th:text="${book.book_name}"></td>
+        <td>
+            <form th:action="@{/admin/book/delete/{id}(id=${book.book_id})}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Add New Book</h2>
+<form th:action="@{/admin/book/add}" method="post" th:object="${newBook}">
+    <label for="book_name">Book Name:</label>
+    <input type="text" id="book_name" th:field="*{book_name}" required>
+    <br>
+    <br>
+    <button type="submit">Add Book</button>
+</form>
+    <br>
+    <br>
+<p><a href="/login">Logout</a></p>
+</div>
+</body>
+</html>

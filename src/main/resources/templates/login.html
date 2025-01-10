@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+</head>
+<style>
+    body {
+                font-family: 'Arial', sans-serif;
+                background-color: #eef2f7;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                box-sizing: border-box;
+            }
+
+            /* Login Container Styling */
+            .login-container {
+                background-color: #ffffff;
+                padding: 40px 30px;
+                border-radius: 12px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 400px;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            h1 {
+                color: #2c3e50;
+                margin-bottom: 10px; /* Reduced space */
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            .error-message {
+                color: #e74c3c;
+                margin-bottom: 10px; /* Reduced space */
+                font-size: 14px;
+                text-align: center;
+            }
+
+            label {
+                font-size: 14px;
+                font-weight: 500;
+                color: #34495e;
+                display: block;
+                text-align: left;
+                margin-bottom: 3px; /* Reduced space */
+            }
+
+            input[type="text"],
+            input[type="password"] {
+                width: 100%;
+                padding: 12px;
+                margin-bottom: 10px; /* Reduced space */
+                border: 1px solid #dfe6e9;
+                border-radius: 8px;
+                font-size: 16px;
+                box-sizing: border-box;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                display: block;
+            }
+
+            input[type="text"]:focus,
+            input[type="password"]:focus {
+                border-color: #3498db;
+                box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+                outline: none;
+            }
+
+            button {
+                background-color: #3498db;
+                color: white;
+                border: none;
+                padding: 12px 20px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                width: 100%;
+                border-radius: 8px;
+                margin-top: 10px; /* Reduced space */
+                transition: background-color 0.3s ease, box-shadow 0.3s ease;
+                display: block;
+            }
+
+            button:hover {
+                background-color: #2980b9;
+                box-shadow: 0 4px 10px rgba(41, 128, 185, 0.3);
+            }
+
+            p {
+                margin-top: 10px; /* Reduced space */
+                font-size: 14px;
+                color: #7f8c8d;
+            }
+
+            a {
+                color: #3498db;
+                text-decoration: none;
+                font-weight: 500;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+            @media (max-width: 768px) {
+                .login-container {
+                    padding: 30px 20px;
+                }
+
+                h1 {
+                    font-size: 20px;
+                }
+
+                button {
+                    font-size: 14px;
+                    padding: 10px 16px;
+                }
+            }
+</style>
+<body>
+<div>
+<h1>Login</h1>
+    <br>
+    <br>
+<div th:if="${param.error}">
+    <p style="color: red;">Invalid username or password.</p>
+</div>
+<div th:if="${message}">
+    <p style="color: red;" th:text="${message}"></p>
+</div>
+<form th:action="@{/login}" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <button type="submit">Login</button>
+</form>
+<p>Don't have an account? <a th:href="@{/signup}">Signup</a></p>
+</div>
+</body>
+</html>
