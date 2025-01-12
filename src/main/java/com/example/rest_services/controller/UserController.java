@@ -37,6 +37,9 @@ public class UserController {
 
     @PostMapping("/signup")
     public String signupUser(@ModelAttribute("user") User user) {
+//        if (user == null || user.getPassword() == null) {
+//            return "redirect:/signup?error=userNull";
+//        }
         String npass = user.getPassword();
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -75,14 +78,8 @@ public class UserController {
         User user = userService.findUserByUsername(username);
         System.out.println(user.getUsername());
 
-        String npass = password;
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = digest.digest(npass.getBytes());
-            npass =  Base64.getEncoder().encodeToString(hashBytes);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+        String npass = hash(password);
+
 
         System.out.println("Password = " + password);
         System.out.println("npass = " + npass);
@@ -93,6 +90,7 @@ public class UserController {
             session.setAttribute("username", username);
             if (userService.isAdmin(username)) {
                 System.out.println("Admin");
+                System.out.println("Password Equal");
                 return "redirect:/admin/users";
             } else {
                 return "redirect:/home";
@@ -128,6 +126,19 @@ public class UserController {
         } else {
             return "redirect:/login?error";
         }
+    }
+
+    public String hash(String pass){
+        String npass = pass;
+
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(npass.getBytes());
+            npass =  Base64.getEncoder().encodeToString(hashBytes);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        return npass;
     }
 
 }

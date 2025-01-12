@@ -26,9 +26,10 @@ public class AdminController {
 
     @GetMapping("/users")
     public String viewUsers(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
-        System.out.println("IN ADMIN/USERS");
+
         String username = (String) session.getAttribute("username");
         if (username != null && userService.isAdmin(username)) {
+            System.out.println("IN ADMIN/USERS");
             List<User> users = userService.getAllUsers();
             model.addAttribute("users", users);
 
@@ -59,10 +60,11 @@ public class AdminController {
 
     @PostMapping("/book/add")
     public String addBook(HttpSession session,@ModelAttribute Book book, RedirectAttributes redirectAttributes) {
-        System.out.println("IN ADMIN/BOOKS");
+
 
         String username = (String) session.getAttribute("username");
         if (username != null && userService.isAdmin(username)) {
+            System.out.println("IN ADMIN/BOOKS");
             bookService.saveBook(book);
             return "redirect:/admin/users";
         } else {

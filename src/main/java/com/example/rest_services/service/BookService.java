@@ -31,9 +31,9 @@ public class BookService {
     }
 
     public Book saveBook(Book book) {
-//        if (book.getBook_name() == null || book.getBook_name().isBlank()) {
-//            throw new IllegalArgumentException("Book name cannot be null or empty");
-//        }
+        if (book.getBook_name() == null || book.getBook_name().isBlank()) {
+            throw new IllegalArgumentException("Book name cannot be null or empty");
+        }
         return bookRepository.save(book);
     }
 }
