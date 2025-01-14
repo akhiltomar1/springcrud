@@ -40,14 +40,14 @@ public class UserController {
 //        if (user == null || user.getPassword() == null) {
 //            return "redirect:/signup?error=userNull";
 //        }
-        String npass = user.getPassword();
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = digest.digest(npass.getBytes());
-            npass =  Base64.getEncoder().encodeToString(hashBytes);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+        String npass = hash(user.getPassword());
+//        try {
+//            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+//            byte[] hashBytes = digest.digest(npass.getBytes());
+//            npass =  Base64.getEncoder().encodeToString(hashBytes);
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException(e);
+//        }
         user.setPassword(npass);
         String email = user.getEmail();
         String emailRegex = "^[A-Za-z0-9._%+-]+@([A-Za-z0-9-]+\\.)?xecurify\\.com$";

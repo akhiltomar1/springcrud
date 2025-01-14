@@ -37,7 +37,6 @@ public class AdminController {
             model.addAttribute("books", books);
 
             model.addAttribute("newBook", new Book());
-
             return "admin/users";
 
         } else {
@@ -64,7 +63,7 @@ public class AdminController {
 
         String username = (String) session.getAttribute("username");
         if (username != null && userService.isAdmin(username)) {
-            System.out.println("IN ADMIN/BOOKS");
+            System.out.println("IN ADMIN-BOOKS");
             bookService.saveBook(book);
             return "redirect:/admin/users";
         } else {

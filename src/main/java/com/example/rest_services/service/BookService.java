@@ -18,14 +18,6 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-//    public Book createBook(Book book) {
-//        return bookRepository.save(book); // No password hashing!
-//    }
-
-//    public Book findBookByBookName(String bookName){
-//        return bookRepository.findByBookName(bookName);
-//    }
-
     public void deleteBook(Long id){
         bookRepository.deleteById(id);
     }
